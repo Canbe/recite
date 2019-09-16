@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite -Summary</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content">
+        <div class="container">
+
+            <div class="row">
+                <h2>Summary</h2>
+            </div>
+            <div class="row">
+                    <table class="table">
+
+                            <tr>
+                                <td>
+                                   Total Words:
+                                </td>
+                                <td>
+                                    {$statistic["total"]}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Total CEE Words
+                                </td>
+                                <td>
+                                    {$statistic["CEE"]}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Total CET-4 Words
+                                </td>
+                                <td>
+                                    {$statistic["CET4"]}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Total CET-6 Words
+                                </td>
+                                <td>
+                                    {$statistic["CET6"]}
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td>
+                                    正在进行单词数：
+                                </td>
+                                <td>
+                                    {$recite}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    完成度：
+                                </td>
+                                <td>
+                                   <?php  echo floor($recite/$statistic["total"]*100)."%";  ?>
+                                </td>
+                            </tr>
+            
+            
+                        </table>
+            </div>
+
+           
+
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+
+    {include file="public/footer" /}
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <script src="STATIC/js/test.js"></script>
+    <!-- js -->
+</body>
+</html>

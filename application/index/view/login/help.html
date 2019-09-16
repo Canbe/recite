@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite -Help</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content">
+        <div class="container">
+
+          <table class="table">
+            <tr>
+              <th>Module</th>
+              <th>Usage</th>
+            </tr>
+
+            <tr>
+              <td>
+                <a href="{:url('outbook/index')}">HOME</a>
+              </td>
+              <td>
+                首页
+              </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="{:url('enbook/list')}">LIST</a>
+                </td>
+                <td>
+                  单词列表，可以对单词进行多种排序,Trans栏中带*号的单词为当前水平超纲单词
+                </td>
+            </tr>
+
+              <tr>
+                  <td>
+                      <a href="{:url('outbook/en')}">EN</a>
+                  </td>
+                  <td>
+                    单词检索
+                  </td>
+                </tr>
+
+              <tr>
+                  <td>
+                      <a href="{:url('enbook/test')}">TEST</a>
+                  </td>
+                  <td>
+                    根据单词得分升序选择前面的40个单词进行测试
+                  </td>
+                </tr>
+                <tr>
+                      <td>
+                          <a href="{:url('enbook/exam')}">EXAM</a>
+                      </td>
+                      <td>
+                        随机抽取40个单词进行测试
+                      </td>
+                </tr>
+
+                <tr>
+                  <td>
+                      Search
+                  </td>
+                  <td>
+                    检索单词，支持中、英双语模糊匹配,使用%作为模糊字
+                  </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <a href="{:url('account/summary')}">Summary</a>
+                    </td>
+                    <td>
+                      个人总结
+                    </td>
+              </tr>
+
+                <tr>
+                    <td>
+                        <a href="{:url('account/setting')}">Setting</a>
+                    </td>
+                    <td>
+                      个人设置
+                    </td>
+              </tr>
+
+
+          </table>
+         
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+    {include file="public/footer" /}
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <script src="STATIC/js/en.js"></script>
+    <!-- js -->
+</body>
+</html>

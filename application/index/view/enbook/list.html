@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite -LIST</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content">
+        <div class="container">
+
+          <div class="row">
+            <ol class="breadcrumb">
+              <li>
+                <a href="{:url('enbook/list')}?sort=1">ID</a>
+              </li>
+              <li>
+                <a href="{:url('enbook/list')}?sort=2">Score</a>
+              </li>
+              <li>
+                <a href="{:url('enbook/list')}?sort=3">Word</a>
+              </li>
+            </ol>
+          </div>
+
+          <div class="row">
+              <nav aria-label="...">
+                  <ul class="pagination">
+
+                    
+
+                    <li>
+                      <a href="{:url('enbook/list')}?page={$page-1}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <?php if($page!=1) {?>
+                    <li><a href="{:url('enbook/list')}?page=1">1 <span aria-hidden="true"></span></a></li>
+                    <li><span aria-hidden="true">...</span></li>
+                    <?php } ?>
+
+
+                    <li class="disabled"><a href="#">{$page} <span class="sr-only">(current)</span></a></li>
+                    <?php if($page!=$totalpage) {?>
+                    <li><span aria-hidden="true">...</span></li>
+                    <li><a href="{:url('enbook/list')}?page={$totalpage}">{$totalpage} <span aria-hidden="true"></span></a></li>
+                    <?php } ?>
+                    <li>
+                        <a href="{:url('enbook/list')}?page={$page+1}" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                  </ul>
+                </nav>
+          </div>
+
+          <div class="row">
+            <table class="table">
+              <tr>
+                <th>score</th>
+                <th>English</th>
+                <th>Translation</th>
+              </tr>
+
+              {foreach $list as $vo}
+                               
+              <tr wordid="{$vo.id}" class="tr-word">
+                <td>{$vo.score}</td>
+                <td class="td-en">
+                  <a href="{:url('outbook/en')}?en={$vo.en}" title="
+                  {$vo.class=='0'?'CEE':($vo.class=='1'?'CET-4':($vo.class=='2'?'CET-6':'UNRATED'))}
+                  ">{$vo.en}</a>
+                  
+                </td>
+                <td sentence="{$vo.sentence}" trans="{$vo.trans}" class="td-trans" sw="1">
+                  {$account.level<$vo.class?'*':''}
+                  {$vo.trans}
+                </td>
+              </tr>
+
+              {/foreach}
+
+            </table>
+          </div>
+
+          <div class="row">
+              <nav aria-label="...">
+                  <ul class="pagination">
+
+                    
+
+                    <li>
+                      <a href="{:url('enbook/list')}?page={$page-1}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <?php if($page!=1) {?>
+                    <li><a href="{:url('enbook/list')}?page=1">1 <span aria-hidden="true"></span></a></li>
+                    <li><span aria-hidden="true">...</span></li>
+                    <?php } ?>
+
+
+                    <li class="disabled"><a href="#">{$page} <span class="sr-only">(current)</span></a></li>
+                    <?php if($page!=$totalpage) {?>
+                    <li><span aria-hidden="true">...</span></li>
+                    <li><a href="{:url('enbook/list')}?page={$totalpage}">{$totalpage} <span aria-hidden="true"></span></a></li>
+                    <?php } ?>
+                    <li>
+                        <a href="{:url('enbook/list')}?page={$page+1}" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                  </ul>
+                </nav>
+          </div>
+
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+
+    {include file="public/footer" /}
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <script src="STATIC/js/en.js"></script>
+    <!-- js -->
+</body>
+</html>

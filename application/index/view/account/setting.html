@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite -Setting</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content">
+        <div class="container">
+
+            <div class="row">
+                <h2>Setting</h2>
+            </div>
+            <div class="row col-md-6">
+                    <table class="table">
+                        <tr>                            
+                            <td>Account : {$account.account}</td>
+                        </tr>
+                        <tr>                        
+                            <td>Name : {$account.name}</td>
+                        </tr>
+                        <tr>                            
+                            <td>Level : 
+                                    {switch name="$account.level" }
+                                    {case value="0"}CEE{/case}
+                                    {case value="1"}CET-4{/case}
+                                    {case value="2"}CET-6{/case}
+                                    {default/}SUMMIT
+                                    {/switch}
+                            </td>
+                        </tr>
+                        <tr>                         
+                            <td>Last-time : ****/**/**</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                      <button class="btn btn-success" data-toggle="modal"
+                                      data-target="#panel-ModifySetting">UPDATE</button>
+                                
+                            </td>
+                        </tr>
+         
+                        
+            
+                    </table>
+            </div>
+
+             <!-- 修改信息 -->
+    <div class="modal fade" id="panel-ModifySetting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" >User-Setting</h4>
+                </div>
+                <form action="{:url('account/modify')}" method="post">
+                <div class="modal-body">
+                  <div class="form-group">
+                      <input type="text" class="form-control" placeholder="name" name="name" value="{$account['name']}" autocomplete="off">
+                    </div>
+  
+                    <div class="radio-inline div-class">
+                      <label>
+                        <input type="radio" name="level"  value="0" 
+                        {$account.level=='0'?'checked':''}>
+                        CEE
+                      </label>
+                    </div>
+                    <div class="radio-inline div-class">
+                      <label>
+                        <input type="radio" name="level" value="1" {$account.level=='1'?'checked':''}>
+                        CET-4
+                      </label>
+                    </div>
+                    <div class="radio-inline div-class">
+                      <label>
+                        <input type="radio" name="level" value="2"
+                        {$account.level=='2'?'checked':''}>
+                        CET-6
+                      </label>
+  
+                    </div>
+                    <div class="radio-inline div-class">
+                      <label>
+                        <input type="radio" name="level" value="10"
+                        {$account.level<'0'||$account.level>2?'checked':''}>
+                        Summit
+                      </label>
+                    </div>
+  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Summit</button>
+                </div>
+              </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+       <!-- 修改信息 -->
+
+           
+
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+
+    {include file="public/footer" /}
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <!-- js -->
+</body>
+</html>

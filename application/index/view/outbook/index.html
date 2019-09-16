@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content">
+        <div class="container">
+
+            <div class="row col-md-6">
+                    <table class="table">
+
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Score</th>
+                        </tr>
+                            {foreach $UserHistoryList as $userh }
+                        <tr>
+                            <td>{$userh.name}</td>   
+                            <td>{$userh.date}</td>
+                            <td>{$userh.score}</td>
+                        </tr>
+                        {/foreach}
+                    </table>
+            </div>
+
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+    {include file="public/footer" /}
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <script src="STATIC/js/en.js"></script>
+    <!-- js -->
+</body>
+</html>

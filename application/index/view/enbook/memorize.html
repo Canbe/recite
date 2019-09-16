@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite -Memorize</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content">
+        <div class="container">
+
+
+          <?php 
+          
+          if($find)
+          {
+          
+          ?>
+
+          <div class="row">
+            <a href="{:url('outbook/en')}?en={$vo.en}">
+                <h2 id="memorize-word">
+             {$vo.en}
+              
+            </h2>            
+          </a>
+          </div>
+
+          <div class="row">
+            <table class="table">
+
+              <tr>
+                <td>
+                  {$vo.trans}
+                </td>
+              </tr>
+
+              <tr>
+                <td>{$vo.sentence}</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <button id="memorize-btn" class="btn btn-warning">
+                    FORGET
+                  </button>
+
+                  <a href="{:url('Enbook/memorize')}?num={$num}"><button class="btn btn-success">
+                    NEXT
+                  </button></a>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+
+          <?php 
+        
+          }
+          else{
+          ?>
+
+            <div class="row">
+              <h2>FIND NOTHING</h2>
+            </div>
+
+            <?php } ?>
+
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+
+    {include file="public/footer" /}
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <script src="STATIC/js/memorize.js"></script>
+    <!-- js -->
+</body>
+</html>

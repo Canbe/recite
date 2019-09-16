@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite -TEST</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content">
+        <div class="container">
+
+
+
+          <div class="row">
+            <table class="table">
+              <tr>
+                <th>status</th>
+                <th>en</th>
+                <th>test</th>          
+                <th>Translation</th>
+              </tr>
+
+              {foreach $list as $vo}
+                               
+              <tr class="word-item">
+                <td>
+                  <button class="btn btn-danger mistake btn-hidden">-1</button>
+                  <button class="btn btn-success correct btn-hidden">2</button>
+                </td>
+                <td>
+                    <span class="answer btn-hidden">{$vo.en}</span>
+                  </td>
+                <td>
+                    <input type="text" words="{$vo.en}" wordid="{$vo.id}" class="input-test">
+                </td>
+                
+                <td>{$vo.trans}</td>
+              </tr>
+
+              {/foreach}
+
+            </table>
+          </div>
+
+          <div class="row">
+            <table class="table">
+              <tr>
+                <td>
+                  正确
+                </td>
+                <td id="correct_input">
+                  0
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  错误
+                </td>
+                <td id="woring_input">
+                  0
+                </td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+
+    {include file="public/footer" /}
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <script src="STATIC/js/mobiletest.js"></script>
+    <!-- js -->
+</body>
+</html>
