@@ -14,7 +14,7 @@ class Enbook extends LoginBase
 
         $page = input("page");
         $sort = input("sort");
-        $userid = User::getLoginUser()[0]["id"];
+        $user = User::getLoginUser()[0];
 
         if($sort)
         {
@@ -43,7 +43,7 @@ class Enbook extends LoginBase
         }
 
         $lastWord = ($page-1)*15;
-        $list = Words::SelectWordList($userid,$sort,$lastWord,$pageWord,5);
+        $list = Words::SelectWordList($user["id"],$sort,$lastWord,$pageWord,$user["level"]);
 
         $this->assign("list",$list);
         $this->assign("page",$page);
