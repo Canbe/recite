@@ -46,7 +46,13 @@
           
           <?php if($login){ ?>
             <li><a href="{:url('enbook/exam')}">Exam</a></li>
-            <li><a href="{:url('enbook/memorize')}">Memorize</a></li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Memorize<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="{:url('enbook/memorize')}">English</a></li>
+              <li><a href="{:url('enbook/trans')}">Trans</a></li>
+            </ul>
+          </li>
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$account.name} <span class="caret"></span></a>
               <ul class="dropdown-menu">

@@ -69,6 +69,7 @@
               <tr>
                 <th>score</th>
                 <th>English</th>
+                <th>audio</th>
                 <th>Translation</th>
               </tr>
 
@@ -78,12 +79,17 @@
                 <td>{$vo.score}</td>
                 <td class="td-en">
                   <a href="{:url('outbook/en')}?en={$vo.en}" title="
-                  {$vo.class=='0'?'CEE':($vo.class=='1'?'CET-4':($vo.class=='2'?'CET-6':'UNRATED'))}
+                  {php}
+                  echo getClassString($vo['class'],['CEE','CET4','CET6','PEE','UNRATED']);
+                  {/php}
                   ">{$vo.en}</a>
                   
                 </td>
+                <td class="td-audio">
+                  <img src="STATIC/img/audio.png" alt="" style="width: 10px;height:10px;">
+                  <audio src="STATIC/mp3/{$vo.en}_103.mp3"></audio>
+                </td>
                 <td sentence="{$vo.sentence}" trans="{$vo.trans}" class="td-trans" sw="1">
-                  {$account.level<$vo.class?'*':''}
                   {$vo.trans}
                 </td>
               </tr>

@@ -18,25 +18,86 @@
     <!-- 网页内容区 -->
     <div class="content">
         <div class="container">
+            <div class="row">
+                <div class="container">
+                    <div class="left col-md-7">
+                            <div class="row">
+                                    <div class="row">
+                                        <h2>Notification</h2>
+                                    </div>
+                                    <div class="row">
+                                        <table class="table">
+                                            <tr>
+                                                <td>
+                                                        当前读音为百度合成音，个别单词发音不标准。
+                                                </td>
+                                                <td>
+                                                    2019/09/20
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    读音系统正式上线
+                                                </td>
+                                                <td>
+                                                    2019/09/19
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                    </div>
+                    
+                    <div class="right col-md-offset-2 col-md-3">
+                            <div class="row">
+                                    <div class="row">
+                                        <h3>
+                                            Popular
+                                        </h3>
+                                    </div>
+                                        <table class="table">
+                                            <tr class="tr-word">
+                                                <td>
+                                                    <a href="{:url('outbook/en')}?en=pronounce">pronounce</a>
+                                                </td>   
+                                                <td class="td-audio">
+                                                                <img src="STATIC/img/audio.png" alt="" style="width: 10px;height:10px;">
+                                                                <audio src="STATIC/mp3/pronounce_103.mp3"></audio>
+                                                </td>
+                                                <td>
+                                                    1024
+                                                </td>
+                                            </tr>
+                                        </table>
+                                </div>
+                
+                            <div class="row">
+                                <div class="row">
+                                    <h3>
+                                        User
+                                    </h3>
+                                </div>
+                                    <table class="table">
+                
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Date</th>
+                                            <th>Score</th>
+                                        </tr>
+                                            {foreach $UserHistoryList as $userh }
+                                        <tr>
+                                            <td>{$userh.name}</td>   
+                                            <td>{$userh.date}</td>
+                                            <td>{$userh.score}</td>
+                                        </tr>
+                                        {/foreach}
+                                    </table>
+                            </div>
+                    </div>
+                </div>
 
-            <div class="row col-md-6">
-                    <table class="table">
-
-                        <tr>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Score</th>
-                        </tr>
-                            {foreach $UserHistoryList as $userh }
-                        <tr>
-                            <td>{$userh.name}</td>   
-                            <td>{$userh.date}</td>
-                            <td>{$userh.score}</td>
-                        </tr>
-                        {/foreach}
-                    </table>
             </div>
-
+            
         </div>
     </div>
     <!-- 网页内容区 -->

@@ -32,12 +32,7 @@
                         </tr>
                         <tr>                            
                             <td>Level : 
-                                    {switch name="$account.level" }
-                                    {case value="0"}CEE{/case}
-                                    {case value="1"}CET-4{/case}
-                                    {case value="2"}CET-6{/case}
-                                    {default/}SUMMIT
-                                    {/switch}
+                                    {$account.levelName}
                             </td>
                         </tr>
                         <tr>                         
@@ -71,32 +66,36 @@
                       <input type="text" class="form-control" placeholder="name" name="name" value="{$account['name']}" autocomplete="off">
                     </div>
   
-                    <div class="radio-inline div-class">
+                    <div class="checkbox-inline div-class">
                       <label>
-                        <input type="radio" name="level"  value="0" 
-                        {$account.level=='0'?'checked':''}>
+                        <input type="checkbox" name="cee"  value="1" {$account.level%10==1?'checked':''}>
                         CEE
                       </label>
                     </div>
-                    <div class="radio-inline div-class">
+                    <div class="checkbox-inline div-class">
                       <label>
-                        <input type="radio" name="level" value="1" {$account.level=='1'?'checked':''}>
+                        <input type="checkbox" name="cet4" value="10" {$account.level/10%10==1?'checked':''}>
                         CET-4
                       </label>
                     </div>
-                    <div class="radio-inline div-class">
+                    <div class="checkbox-inline div-class">
                       <label>
-                        <input type="radio" name="level" value="2"
-                        {$account.level=='2'?'checked':''}>
+                        <input type="checkbox" name="cet6" value="100" {$account.level/100%10==1?'checked':''}>
                         CET-6
                       </label>
-  
+
                     </div>
-                    <div class="radio-inline div-class">
+                    <div class="checkbox-inline div-class">
                       <label>
-                        <input type="radio" name="level" value="10"
-                        {$account.level<'0'||$account.level>2?'checked':''}>
-                        Summit
+                        <input type="checkbox" name="pee" value="1000" {$account.level/1000%10==1?'checked':''}>
+                        PEE
+                      </label>
+
+                    </div>
+                    <div class="checkbox-inline div-class">
+                      <label>
+                        <input type="checkbox" name="unrated" value="10000" {$account.level/10000%10==1?'checked':''}>
+                        SUMMIT
                       </label>
                     </div>
   

@@ -47,9 +47,11 @@ class Words extends Model
         sentence,
         link,
         ifNULL(record.score,0) as score 
-        from words left join record on words.id = record.wordid and userid = ? where class <= ? ORDER BY ".$order." limit ?,?";
+        from words left join record on words.id = record.wordid and userid = ? where ".$level." ORDER BY ".$order." limit ?,?";
 
-        return Db::query($str,[$userid,$level,$start,$lenght]);
+        $res = Db::query($str,[$userid,$start,$lenght]);
+
+        return $res;
     }
 
     public static function getWordsTotal(){
@@ -61,9 +63,11 @@ class Words extends Model
     {
         return DB::query("select 
         count(*) as total,
-        sum(IF(class=0,1,0)) as CEE,
-        sum(IF(class=1,1,0)) as CET4,
-        sum(IF(class=2,1,0)) as CET6
+        sum(IF(class%10=1,1,0)) as CEE,
+        sum(IF(class div 10%10=1,1,0)) as CET4,
+        sum(IF(class div 100%10=1,1,0)) as CET6,
+        sum(IF(class div 1000%10=1,1,0)) as PEE,
+        sum(IF(class div 10000%10=1,1,0)) as SUMMIT 
         from words")[0];
     }
 

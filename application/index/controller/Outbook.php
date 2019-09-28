@@ -1,10 +1,10 @@
 <?php
 namespace app\index\controller;
-use think\Db;
-use think\Session;
 use app\index\model\Words;
 use app\index\model\User;
 use app\index\controller\UnLoginBase;
+use app\index\model\Translation;
+use app\index\model\Common;
 
 class Outbook extends UnLoginBase
 {
@@ -68,10 +68,20 @@ class Outbook extends UnLoginBase
         {
             $search_word = $vo[0]["en"];
             $links = explode(';',$vo[0]["link"]);
+            $vo[0]["className"] = Common::getClassString($vo[0]["class"],["CEE","CET4","CET6","PEE","SUMMIT"]);
 
             $link_out = [];
 
             $index = 0;
+
+            if(file_exists("static/mp3/".$search_word."_103.mp3"))
+            {
+                //nothing to do
+            }
+            else
+            {
+                Common::DownloadMP3($search_word,"103");
+            }
 
             foreach($links as $key => $linkword)
             {
@@ -147,8 +157,28 @@ class Outbook extends UnLoginBase
         $this->error("该功能暂未开发","outbook/index",null,4);
     }
 
-    public function fortest()
+    public function translation($q,$from,$to)
+    {
+         print_r(Translation::translate($q,$from,$to));
+    }
+
+    private function getAccessToken()
     {
 
+        //证书无效，使用http连接。
+        $url ="https://openapi.baidu.com/oauth/2.0/token";
+        $arg = 
+        ["grant_type"=>"client_credentials",
+        "client_id"=>"ULVbD5cs5LQd5Bcrv6A6kQQW","client_secret"=>"2vWuW2oT4VUnDYDM6mjz9StZZt5EtZyT"
+        ];
+
+        $res = Translation::callOnce($url,$arg,"get");
+        print_r(json_decode($res,true));
     }
+
+    public function fortest()
+    {
+        print_r(Common::getClassSql(1100));
+    }
+    
 }

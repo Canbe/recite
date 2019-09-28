@@ -43,7 +43,9 @@ class Enbook extends LoginBase
         }
 
         $lastWord = ($page-1)*15;
-        $list = Words::SelectWordList($user["id"],$sort,$lastWord,$pageWord,$user["level"]);
+        $level = Common::getClassSql($user['level']);
+
+        $list = Words::SelectWordList($user["id"],$sort,$lastWord,$pageWord,$level);
 
         $this->assign("list",$list);
         $this->assign("page",$page);
@@ -78,7 +80,13 @@ class Enbook extends LoginBase
         $trans = input("trans");
         $sentence = input("sentence");
         $link = input("link");
-        $class = input("class");
+        $cee = input("cee");
+        $cet4 = input("cet4");
+        $cet6 = input("cet6");
+        $pee = input("pee");
+        $unrated = input("unrated");
+        $class = 0;
+        $class+=$cee+$cet4+$cet6+$pee+$unrated;
         $user = User::getLoginUser()[0];
         if($user["permit"]<=0)
         {
@@ -93,8 +101,16 @@ class Enbook extends LoginBase
         $en = input("en");
         $trans = input("trans");
         $sentence = input("sentence");
-        $class = input("class");
         $user = User::getLoginUser()[0];
+
+        $cee = input("cee");
+        $cet4 = input("cet4");
+        $cet6 = input("cet6");
+        $pee = input("pee");
+        $unrated = input("unrated");
+        $class = 0;
+        $class+=$cee+$cet4+$cet6+$pee+$unrated;
+
         if($user["permit"]<=1)
         {
             $this->error("权限不足","outbook/index",null,4);
@@ -118,7 +134,7 @@ class Enbook extends LoginBase
         }
 
         
-        $vo = Words::SelectWordList($user["id"],2,$num,1,$user["level"])[0];
+        $vo = Words::SelectWordList($user["id"],2,$num,1,Common::getClassSql($user["level"]))[0];
 
         if(!$vo)
         {
@@ -154,7 +170,7 @@ class Enbook extends LoginBase
     //测试模式
     public function test(){
         $user = User::getLoginUser()[0];
-        $list = Words::SelectWordList($user["id"],2,0,40,$user['level']);
+        $list = Words::SelectWordList($user["id"],2,0,40,Common::getClassSql($user['level']));
 
         shuffle($list);
 

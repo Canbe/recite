@@ -82,4 +82,71 @@ class Common extends Model
         return false;
 
     }
+
+    public static function GenerateMP3($name,$data)
+    {
+        $name = "static/mp3/".$name.".mp3";
+        $file = fopen($name, "w");      
+        fwrite($file, $data);
+        fclose($file);
+    }
+
+    public static function DownloadMP3($tex,$per)
+    {
+        $url = "http://tsn.baidu.com/text2audio";
+        $arg = [
+            "tex" => $tex,
+            "lan" => "zh",
+            "cuid" => "7C2A31503AB6",
+            "ctp" => "1",
+            "tok" => Compound_ACCESS_TOKEN,
+            "per" =>$per
+        ];
+
+
+        $res = Translation::call($url,$arg,"post");
+
+        Common::GenerateMP3($tex."_".$per,$res);
+    }
+
+        /*
+    函数作用：获取类别字符串
+    参数：$class为数字；$arrayName为类别数组
+    返回值：类别字符串
+    AUTHOR:朱永乐
+    */ 
+    public static function getClassString($class,$arrayName)
+    {
+        $string = "";
+        if ($class == NULL || $class == "") {
+        return "UNRATED";
+        }
+        for ($j=0; $j<count($arrayName);$j++) { 
+        if($class%10 == 1)
+        { 
+            $string = $string.$arrayName[$j]." | ";
+        }
+        $class = $class/10;
+        }
+        return chop($string," | ");
+    }
+
+    public static function getClassSql($class)
+    {
+        $string = "";
+        if($class==NULL || $class == "" || $class == 0)
+        {
+            return "false";
+        }
+
+        for($i = 1;$i<=10000;$i=$i*10)
+        {
+            if($class%10==1)
+            {
+                $string = $string."class div $i%10=1 or ";
+            }
+            $class = $class/10;
+        }
+        return chop($string," or ");
+    }
 }
