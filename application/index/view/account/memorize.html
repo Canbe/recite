@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite -Memorize</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content" num="{$num}" >
+        <div class="container">
+
+          <div class="row">
+            <span class="list-current-span">1</span>
+            <span>/{$memorize.total}</span>
+          </div>
+
+          {foreach $list as $vo}
+          <div class="row row-word" op="1">
+            <table class="table">
+              <tr class="tr-word">
+                <td>
+                    <h2>
+                      {$vo.en}
+                      <span class="td-audio">
+                          <img src="STATIC/img/audio.png" alt="" style="width: 10px;height:10px;">
+                          <audio src="STATIC/mp3/{$vo.en}_103.mp3"></audio>
+                      </span>
+                      
+                    </h2>     
+                  <span style="font-size: 10px">
+                    {php}
+                    echo getClassString($vo['class'],['CEE','CET4','CET6','PEE','UNRATED']);
+                    {/php}
+                  </span>
+                </td>
+              </tr>
+              <tr  class="btn-hidden">
+                  <td>
+                    {$vo.trans}
+                  </td>
+              </tr>
+
+              <tr>
+                  <td>
+                    {$vo.sentence}
+                  </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <button class="btn btn-warning btn-forget" wordid="{$vo.id}">Forget</button>
+                  <button class="btn btn-success btn-show">show</button>
+                  <button class="btn btn-info btn-easy btn-hidden" wordid="{$vo.id}">Easy</button>
+                </td>
+              </tr>
+
+
+            </table>
+          </div>
+          {/foreach}
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+
+    {include file="public/footer" /}
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <script src="STATIC/js/memorize.js"></script>
+    <!-- js -->
+</body>
+</html>

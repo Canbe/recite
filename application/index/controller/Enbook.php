@@ -21,7 +21,7 @@ class Enbook extends LoginBase
             Session::set("SORT",$sort);
         }
 
-        $total = Words::getWordsTotal();
+        $total = Words::getSelectWordListTotal($user["id"],$sort,$user["level"])[0]["total"];
         $totalpage = ceil($total/15);
         $sort = Session::get("SORT");
 
@@ -69,6 +69,10 @@ class Enbook extends LoginBase
         if($score>0)
         {
             User::UpdateUserLastime($userid,1);
+        }
+        else if($score<0)
+        {
+            Words::UpdateWordAboutTime($wordid,5);
         }
         return json(["status"=>200]);
     }
@@ -121,34 +125,6 @@ class Enbook extends LoginBase
             Words::InsertWord($en,$trans,$sentence,$class);
         }
         $this->redirect("outbook/en",["en"=>$en]);
-    }
-
-    //记忆模式
-    public function memorize()
-    {
-        $num = input("num");
-        $user = User::getLoginUser()[0];
-        if(!$num)
-        {
-            $num = 0;
-        }
-
-        
-        $vo = Words::SelectWordList($user["id"],2,$num,1,Common::getClassSql($user["level"]))[0];
-
-        if(!$vo)
-        {
-            $this->assign("find",false);
-        }
-        else
-        {
-            $this->assign("vo",$vo);
-            $this->assign("find",true);
-            $this->assign("num",$num+1);
-        }
-
-        
-        return view("enbook/memorize");
     }
 
     //检测单词是否存在

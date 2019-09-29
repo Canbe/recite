@@ -40,16 +40,51 @@ class Account extends LoginBase{
         return view("account/setting");
     }
 
-        //总结模式
-        public function summary()
+    //总结模式
+    public function summary()
+    {
+        $userid = User::getLoginUser()[0]["id"];
+        $statistic = Words::getStatisticClassWords();
+        $recite = User::GetUserNotZeroWordCount($userid);
+
+        $this->assign("statistic",$statistic);
+        $this->assign("recite",$recite);
+        return view("account/summary");
+    }
+
+    //记忆模式
+    public function memorize()
+    {
+        $num = input("num");
+        $user = User::getLoginUser()[0];
+        if(!$num)
         {
-            $userid = User::getLoginUser()[0]["id"];
-            $statistic = Words::getStatisticClassWords();
-            $recite = User::GetUserNotZeroWordCount($userid);
-    
-            $this->assign("statistic",$statistic);
-            $this->assign("recite",$recite);
-            return view("account/summary");
+            $num = 0;
         }
 
+        $page = 0;
+        $pageLenght = 15;
+        
+        $list = Words::SelectWordList($user["id"],4,$page,$pageLenght,Common::getClassSql($user["level"]));
+
+        $this->assign("list",$list);
+        $this->assign("num",$num+1);
+        $this->assign("memorize",[
+            "total"=>$pageLenght
+        ]);    
+        return view("account/memorize");
+    }
+
+    public function memorize_record()
+    {
+        $user = User::getLoginUser()[0];
+        $wordid = input("wordid");
+        $score = input("score");
+
+        if(!$wordid||!$score) return json(["status"=>"400"]);
+
+        Words::MemorizeWords($user["id"],$wordid,$score);
+
+        return json(["status"=>"200"]);
+    }
 }

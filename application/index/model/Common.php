@@ -15,7 +15,12 @@ class Common extends Model
         {
             return "score";
         }
-        return "words.en";
+        else if($num=='3')
+        {
+            return "words.en";
+        }
+        return " relast,score ";
+        
     }
 
     public static function ismobile()

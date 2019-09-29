@@ -20,6 +20,7 @@ class Outbook extends UnLoginBase
         $res = User::SelectUserLastime(10);
 
         $this->assign("UserHistoryList",$res);
+        $this->assign("PopularList",Words::SelectWordScore());
 
         return view("outbook/index");
 
@@ -69,6 +70,8 @@ class Outbook extends UnLoginBase
             $search_word = $vo[0]["en"];
             $links = explode(';',$vo[0]["link"]);
             $vo[0]["className"] = Common::getClassString($vo[0]["class"],["CEE","CET4","CET6","PEE","SUMMIT"]);
+
+            Words::UpdateWordAboutTime($vo[0]["id"],1);
 
             $link_out = [];
 

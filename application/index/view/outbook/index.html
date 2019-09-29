@@ -29,6 +29,14 @@
                                         <table class="table">
                                             <tr>
                                                 <td>
+                                                        单词时间排序模块上线
+                                                </td>
+                                                <td>
+                                                    2019/09/28
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
                                                         当前读音为百度合成音，个别单词发音不标准。
                                                 </td>
                                                 <td>
@@ -56,18 +64,20 @@
                                         </h3>
                                     </div>
                                         <table class="table">
+                                            {foreach $PopularList as $w }
                                             <tr class="tr-word">
                                                 <td>
-                                                    <a href="{:url('outbook/en')}?en=pronounce">pronounce</a>
+                                                    <a href="{:url('outbook/en')}?en={$w.en}">{$w.en}</a>
                                                 </td>   
                                                 <td class="td-audio">
                                                                 <img src="STATIC/img/audio.png" alt="" style="width: 10px;height:10px;">
-                                                                <audio src="STATIC/mp3/pronounce_103.mp3"></audio>
+                                                                <audio src="STATIC/mp3/{$w.en}_103.mp3"></audio>
                                                 </td>
                                                 <td>
-                                                    1024
+                                                    {$w.score}
                                                 </td>
                                             </tr>
+                                            {/foreach}
                                         </table>
                                 </div>
                 

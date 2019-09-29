@@ -23,7 +23,7 @@ class Words extends Model
     //更新记录表分数
     public static function UpdateRecord($wordid,$userid,$score)
     {
-        $str = "insert into record values (DEFAULT,?,?,?) ON DUPLICATE KEY UPDATE score = ?";
+        $str = "insert into record values (DEFAULT,?,?,?,now()) ON DUPLICATE KEY UPDATE score = ? ,lasttime = now()";
 
         return Db::query($str,[$wordid,$userid,$score,$score]);
     }
@@ -31,9 +31,22 @@ class Words extends Model
     //更新记录表相对分数
     public static function UpdateRelativeRecord($wordid,$userid,$score)
     {
-        $str = "insert into record values (DEFAULT,?,?,?) ON DUPLICATE KEY UPDATE score = score + ?";
+        $str = "insert into record values (DEFAULT,?,?,?,now()) ON DUPLICATE KEY UPDATE score = score + ? ,lasttime = now()";
 
         return Db::query($str,[$wordid,$userid,$score,$score]);
+    }
+
+    public static function getSelectWordListTotal($userid,$order,$level)
+    {
+        $order = Common::getOrder($order);
+
+        $level = getClassSql($level);
+
+        $str = "select count(*) as total from words left join record on words.id = record.wordid and userid = ? where ".$level;
+
+        $res = Db::query($str,[$userid]);
+
+        return $res;
     }
 
     public static function SelectWordList($userid,$order,$start,$lenght,$level)
@@ -46,7 +59,8 @@ class Words extends Model
         en,trans,
         sentence,
         link,
-        ifNULL(record.score,0) as score 
+        ifNULL(record.score,0) as score,
+        record.lasttime as relast 
         from words left join record on words.id = record.wordid and userid = ? where ".$level." ORDER BY ".$order." limit ?,?";
 
         $res = Db::query($str,[$userid,$start,$lenght]);
@@ -73,7 +87,7 @@ class Words extends Model
 
     public static function SelectWordWithUser($en,$userid)
     {
-        $str = "select words.id as id,en,trans,sentence,link,class,ifNULL(record.score,0) as score from words left join record on words.id = record.wordid and userid = ? where words.en  = ?";
+        $str = "select words.id as id,en,trans,sentence,link,class,ifNULL(record.score,0) as score ,lasttime from words left join record on words.id = record.wordid and userid = ? where words.en  = ?";
 
         return Db::query($str,[$userid,$en]);
     }
@@ -87,12 +101,36 @@ class Words extends Model
 
     public static function InsertWord($en,$trans,$sentence,$class)
     {
-        $res = Db::query("insert into words (id,en,trans,sentence,link,class) values (default,?,?,?,'',?)",[$en,$trans,$sentence,$class]);
+        $res = Db::query("insert into words (id,en,trans,sentence,link,class,lastdate,score) values (default,?,?,?,'',?,curdate(),0)",[$en,$trans,$sentence,$class]);
     }
 
     public static function UpdateWord($id,$en,$trans,$sentence,$link,$class)
     {
         $str = "update words set en = ?, trans = ?,sentence= ?,link= ? ,class = ? where id = ?";
         return Db::query($str,[$en,$trans,$sentence,$link,$class,$id]);
+    }
+
+    public static function UpdateWordAboutTime($id,$score)
+    {
+        $str = "update words set score = if(curdate()=lastdate,score+?,1),lastdate=curdate() where id=?";
+
+        return Db::query($str,[$score,$id]);
+    }
+
+    public static function SelectWordScore()
+    {
+        $str = "select * from words where score>0 order by score desc,lastdate desc,class desc limit 10;";
+
+        return Db::query($str);
+    }
+
+    /**
+     * 更新单词记忆记录，如果是加分，就将单词的记忆时间更新，如果是负分，只做分数减法。
+     */
+    public static function MemorizeWords($userid,$wordid,$score)
+    {
+        $str = "update record set score = score+? ,lasttime=if(?>0,now(),lasttime) where wordid = ? and userid = ?";
+
+        return Db::query($str,[$score,$score,$wordid,$userid]);
     }
 }
