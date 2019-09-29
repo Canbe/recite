@@ -1,0 +1,16 @@
+.btn-hidden{
+    display: none !important;
+}
+
+
+.content .div-en{
+    position: relative;
+}
+
+.content .div-en>span{
+    font-size: 8px;
+    color:#585151;
+}
+.fade .div-class>label{
+    font-size: 10px;
+}

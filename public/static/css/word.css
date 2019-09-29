@@ -1,0 +1,17 @@
+.content .left
+{
+    padding-top: 50px;
+}
+.content .right
+{
+    padding: 50px;
+}
+.content .left .row
+{
+    text-align: center;
+}
+.content .right button
+{
+    text-align: right;
+    font-size:5px;
+}
