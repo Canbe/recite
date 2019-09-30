@@ -73,16 +73,22 @@ class Words extends Model
     }
 
     //获得统计分类的单词
-    public static function getStatisticClassWords()
+    public static function getStatisticClassWords($userid)
     {
-        return DB::query("select 
+        $str = "select 
         count(*) as total,
         sum(IF(class%10=1,1,0)) as CEE,
+        sum(if(IF(class%10=1,1,0) and record.score > 1,1,0)) as already_CEE,
         sum(IF(class div 10%10=1,1,0)) as CET4,
+        sum(if(IF(class div 10%10=1,1,0) and record.score > 1,1,0)) as already_CET4,
         sum(IF(class div 100%10=1,1,0)) as CET6,
+        sum(if(IF(class div 100%10=1,1,0) and record.score > 1,1,0)) as already_CET6,
         sum(IF(class div 1000%10=1,1,0)) as PEE,
-        sum(IF(class div 10000%10=1,1,0)) as SUMMIT 
-        from words")[0];
+        sum(if(IF(class div 1000%10=1,1,0) and record.score > 1,1,0)) as already_PEE,
+        sum(IF(class div 10000%10=1,1,0)) as SUMMIT,
+        sum(if(IF(class div 10000%10=1,1,0) and record.score > 1,1,0)) as already_Summit
+        from words left join record on words.id = record.wordid and record.userid = ?";
+        return DB::query($str,[$userid])[0];
     }
 
     public static function SelectWordWithUser($en,$userid)

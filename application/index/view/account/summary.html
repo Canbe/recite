@@ -30,7 +30,7 @@
                                    Total Words:
                                 </td>
                                 <td>
-                                    {$statistic["total"]}
+                                    <span>{$statistic["total"]}</span>
                                 </td>
                             </tr>
 
@@ -39,7 +39,11 @@
                                     Total CEE Words
                                 </td>
                                 <td>
-                                    {$statistic["CEE"]}
+                                    <span>
+                                        {$statistic["already_CEE"]}
+                                    </span>
+                                    <span>/ {$statistic["CEE"]}</span>
+                                    
                                 </td>
                             </tr>
 
@@ -48,7 +52,11 @@
                                     Total CET-4 Words
                                 </td>
                                 <td>
-                                    {$statistic["CET4"]}
+                                    <span>
+                                        {$statistic["already_CET4"]}
+                                    </span>
+                                    <span>/ {$statistic["CET4"]}</span>
+                                    
                                 </td>
                             </tr>
 
@@ -57,7 +65,8 @@
                                     Total CET-6 Words
                                 </td>
                                 <td>
-                                    {$statistic["CET6"]}
+                                    <span>{$statistic["already_CET6"]}</span>
+                                    <span>/ {$statistic["CET6"]}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -65,7 +74,8 @@
                                     Total PEE Words
                                 </td>
                                 <td>
-                                    {$statistic["PEE"]}
+                                    <span>{$statistic["already_PEE"]}</span>
+                                    <span>/ {$statistic["PEE"]}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -73,7 +83,8 @@
                                     Total SUMMIT Words
                                 </td>
                                 <td>
-                                    {$statistic["SUMMIT"]}
+                                    <span>{$statistic["already_Summit"]}</span>
+                                    <span>/ {$statistic["SUMMIT"]}</span>
                                 </td>
                             </tr>
                             
@@ -83,7 +94,7 @@
                                     正在进行单词数：
                                 </td>
                                 <td>
-                                    {$recite}
+                                    {$statistic.already_Total}
                                 </td>
                             </tr>
 
@@ -92,7 +103,7 @@
                                     完成度：
                                 </td>
                                 <td>
-                                   <?php  echo floor($recite/$statistic["total"]*100)."%";  ?>
+                                   {$statistic.recite}%
                                 </td>
                             </tr>
             

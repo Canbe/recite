@@ -29,7 +29,7 @@
                                         <table class="table">
                                             <tr>
                                                 <td>
-                                                        单词时间排序模块上线
+                                                        Memorize模块更新！
                                                 </td>
                                                 <td>
                                                     2019/09/28
@@ -41,14 +41,6 @@
                                                 </td>
                                                 <td>
                                                     2019/09/20
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    读音系统正式上线
-                                                </td>
-                                                <td>
-                                                    2019/09/19
                                                 </td>
                                             </tr>
                                         </table>
@@ -67,7 +59,11 @@
                                             {foreach $PopularList as $w }
                                             <tr class="tr-word">
                                                 <td>
-                                                    <a href="{:url('outbook/en')}?en={$w.en}">{$w.en}</a>
+                                                    <a href="{:url('outbook/en')}?en={$w.en}" title="
+                                                    {php}
+                                                    echo getClassString($w['class'],['CEE','CET4','CET6','PEE','UNRATED']);
+                                                    {/php}
+                                                    ">{$w.en}</a>
                                                 </td>   
                                                 <td class="td-audio">
                                                                 <img src="STATIC/img/audio.png" alt="" style="width: 10px;height:10px;">

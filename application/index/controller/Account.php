@@ -44,11 +44,14 @@ class Account extends LoginBase{
     public function summary()
     {
         $userid = User::getLoginUser()[0]["id"];
-        $statistic = Words::getStatisticClassWords();
-        $recite = User::GetUserNotZeroWordCount($userid);
+        $statistic = Words::getStatisticClassWords($userid);      
+
+        $statistic["already_Total"] = $statistic["already_CEE"]+$statistic["already_CET4"]+$statistic["already_CET6"]+$statistic["already_PEE"]+$statistic["already_Summit"];
+
+        $statistic["recite"] = floor($statistic["already_Total"]/$statistic["total"]*100);
 
         $this->assign("statistic",$statistic);
-        $this->assign("recite",$recite);
+        $this->assign("recite",$statistic["recite"]);
         return view("account/summary");
     }
 
