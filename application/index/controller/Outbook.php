@@ -160,9 +160,30 @@ class Outbook extends UnLoginBase
         $this->error("该功能暂未开发","outbook/index",null,4);
     }
 
-    public function translation($q,$from,$to)
+    public function translation()
     {
-         print_r(Translation::translate($q,$from,$to));
+        $q = input("q");
+        $from = input("from");
+        $to = input("to");
+        if(!$q)
+        {
+            return json(["status"=>"400"]);
+        }
+        if(!$from)
+        {
+            if(preg_match("/[\x7f-\xff]/", $q))
+            {
+                $from = "zh";
+                $to = "en";
+            }
+            else
+            {
+                $from = "en";
+                $to = "zh";
+            }
+        }
+        $res = Translation::translate($q,$from,$to)["trans_result"];
+        return json($res[0]);
     }
 
     private function getAccessToken()
@@ -181,7 +202,7 @@ class Outbook extends UnLoginBase
 
     public function fortest()
     {
-        print_r(Common::getClassSql(1100));
+        // print_r(Words::MemorizeWords(1,2553,-1));
     }
     
 }

@@ -131,12 +131,13 @@ class Words extends Model
     }
 
     /**
-     * 更新单词记忆记录，如果是加分，就将单词的记忆时间更新，如果是负分，只做分数减法。
+     * 更新单词记忆记录，如果是加分，就将单词的记忆时间更新，如果是负分，只做分数减法，如果记录不存在则插入新的记录。
      */
+    //insert into record values (DEFAULT,?,?,?,now()) ON DUPLICATE KEY UPDATE score = ? ,lasttime = now()
     public static function MemorizeWords($userid,$wordid,$score)
     {
-        $str = "update record set score = score+? ,lasttime=if(?>0,now(),lasttime) where wordid = ? and userid = ?";
+        $str = "insert into record values (DEFAULT,?,?,?,now()) ON DUPLICATE KEY update score = score+? ,lasttime=if(?>0,now(),lasttime) ";
 
-        return Db::query($str,[$score,$score,$wordid,$userid]);
+        return Db::query($str,[$wordid,$userid,$score,$score,$score]);
     }
 }
