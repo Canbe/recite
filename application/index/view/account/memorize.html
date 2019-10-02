@@ -30,7 +30,7 @@
               <tr class="tr-word">
                 <td>
                     <h2>
-                      {$vo.en}
+                      <a href="{:url('outbook/en')}?en={$vo.en}" style="font-size: 25px;font-weight:bold;">{$vo.en}</a>
                       <span class="td-audio">
                           <img src="STATIC/img/audio.png" alt="" style="width: 10px;height:10px;">
                           <audio src="STATIC/mp3/{$vo.en}_103.mp3"></audio>
@@ -71,9 +71,6 @@
         </div>
     </div>
     <!-- 网页内容区 -->
-
-
-    {include file="public/footer" /}
 
     <!-- js -->
     <script src="STATIC/js/jquery.min.js"></script>

@@ -33,12 +33,28 @@ class Login extends UnLoginBase
     public function exit()
     {
         User::exit();
-        $this->success("已退出登录","login/index",null,3);
+        $this->success("已退出登录","login/index",null,1);
     }
 
     public function register()
     {
-        $this->error("暂不支持注册新用户，敬请期待","login/index",null,4);
+        $name = input("name");
+        $email = input("email");
+        $password = input("password");
+        $account = input("account");
+        $Repassword = input("Re-password");
+
+
+        if(!$name||!$email||!$password||!$account||$password!=$Repassword)
+        {
+            $this->success("参数空缺或者两次密码不一致","login/newuser",null,2);
+        }
+
+        User::InsertNewUser($account,$name.'#'.$email,$password);
+
+
+        $this->redirect("login/welcome",["account"=>$account,"email"=>$email,"name"=>$name]);
+
     }
 
     public function help()
@@ -49,6 +65,25 @@ class Login extends UnLoginBase
             $this->assign("account",User::getLoginUser()[0]);
         }
         return view("help");
+    }
+
+    public function welcome()
+    {
+        $name = input("name");
+        $email = input("email");
+        $account = input("account");
+
+        if(!$account)
+        {
+            $account = "unknow";
+            $name ="nobody";
+            $email = "nobody@alien.com";
+        }
+
+        $this->assign("name",$name);
+        $this->assign("email",$email);
+        $this->assign("account",$account);
+        return view("login/welcome");
     }
   
 }

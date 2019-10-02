@@ -44,11 +44,9 @@ class Account extends LoginBase{
     public function summary()
     {
         $userid = User::getLoginUser()[0]["id"];
-        $statistic = Words::getStatisticClassWords($userid);      
+        $statistic = Words::getStatisticClassWords($userid);
 
-        $statistic["already_Total"] = $statistic["already_CEE"]+$statistic["already_CET4"]+$statistic["already_CET6"]+$statistic["already_PEE"]+$statistic["already_Summit"];
-
-        $statistic["recite"] = floor($statistic["already_Total"]/$statistic["total"]*100);
+        $statistic["recite"] = floor($statistic["already_Recite"]/$statistic["total"]*100);
 
         $this->assign("statistic",$statistic);
         $this->assign("recite",$statistic["recite"]);

@@ -86,7 +86,8 @@ class Words extends Model
         sum(IF(class div 1000%10=1,1,0)) as PEE,
         sum(if(IF(class div 1000%10=1,1,0) and record.score > 1,1,0)) as already_PEE,
         sum(IF(class div 10000%10=1,1,0)) as SUMMIT,
-        sum(if(IF(class div 10000%10=1,1,0) and record.score > 1,1,0)) as already_Summit
+        sum(if(IF(class div 10000%10=1,1,0) and record.score > 1,1,0)) as already_Summit,
+        sum(if(record.score>1,1,0)) as already_Recite 
         from words left join record on words.id = record.wordid and record.userid = ?";
         return DB::query($str,[$userid])[0];
     }

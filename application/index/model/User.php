@@ -16,7 +16,7 @@ class User extends Model
     {
         $res = User::getUser($account);
 
-        if(!$res||$res[0]["password"]!=$password)
+        if(!$res||$res[0]["password"]!=$password||$res[0]["permit"]<0)
         {
             return false;
         }
@@ -68,4 +68,12 @@ class User extends Model
         $str = "update user set name = ?,level = ? where id = ? ";
         return Db::query($str,[$name,$level,$id]);
     }
+
+    public static function InsertNewUser($account,$name,$password)
+    {
+        $str = "insert into user (id,name,password,lasttime,account,level,permit) values(default,?,?,now(),?,0,-1)";
+
+        Db::query($str,[$name,$password,$account]);
+    }
+    
 }

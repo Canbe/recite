@@ -94,7 +94,7 @@ class Enbook extends LoginBase
         $user = User::getLoginUser()[0];
         if($user["permit"]<=0)
         {
-            $this->error("权限不足","outbook/index",null,4);
+            $this->error("权限不足","outbook/index",null,2);
         }
         Words::UpdateWord($id,$en,$trans,$sentence,$link,$class);
         $this->redirect("outbook/en",["en"=>$en]);
@@ -117,7 +117,7 @@ class Enbook extends LoginBase
 
         if($user["permit"]<=1)
         {
-            $this->error("权限不足","outbook/index",null,4);
+            $this->error("权限不足","outbook/index",null,2);
         }
 
         if($en&&$en!="")
@@ -146,10 +146,11 @@ class Enbook extends LoginBase
     //测试模式
     public function test(){
         $user = User::getLoginUser()[0];
-        $list = Words::SelectWordList($user["id"],2,0,40,Common::getClassSql($user['level']));
+        $pageLenght = 40;
+        $list = Words::SelectWordList($user["id"],2,0,$pageLenght,Common::getClassSql($user['level']));
 
         shuffle($list);
-
+        $this->assign("pageLenght","$pageLenght");
         $this->assign("list",$list);
         if(Common::ismobile())
         {

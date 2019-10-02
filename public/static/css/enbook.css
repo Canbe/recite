@@ -1,6 +1,9 @@
 .btn-hidden{
     display: none !important;
 }
+.btn-woring{
+    border-color: red!important;
+}
 
 
 .content .div-en{

@@ -10,7 +10,7 @@ class LoginBase extends Controller{
 
         if(!User::HasLogin())
         {
-            $this->error("请先登录","login/index",null,3);
+            $this->error("请先登录","login/index",null,1);
         }
 
         $this->assign("login",true);

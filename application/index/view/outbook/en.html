@@ -21,10 +21,10 @@
 
 
             <div class="row">
-              {if condition="($login) and ($account['permit'] > 1)"}
-              <button class="btn" data-toggle="modal" data-target="#panel-WordAddition">
-                NEW
-              </button>
+                  {if condition="($login) and ($account['permit'] > 1)"}
+                  <button class="btn" data-toggle="modal" data-target="#panel-WordAddition">
+                    NEW
+                  </button>
 
                 <!-- 新增单词 -->
                   <div class="modal fade" id="panel-WordAddition" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -92,10 +92,12 @@
                                   <button type="submit" class="btn btn-primary">Summit</button>
                               </div>
                             </form>
-                      </div><!-- /.modal-content -->
-                  </div><!-- /.modal -->
-                <!-- 新增单词 -->
-              {/if}
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                  <!-- 新增单词 -->
+                </div>
+                {/if}
+                
             </div>
      
      
@@ -289,12 +291,12 @@
             <!-- 单词关联 -->
 
         </div>
-      </div>
+    </div>
     <!-- 网页内容区 -->
 
 
 
-    {include file="public/footer" /}
+    <!-- {include file="public/footer" /} -->
 
     <!-- js -->
     <script src="STATIC/js/jquery.min.js"></script>

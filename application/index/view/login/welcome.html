@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite -LOGIN</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content">
+        <div class="container">
+
+            <div class="row">
+              <h3>Thank you for registering!</h3>
+            </div>
+
+            <div class="row">
+              <table class="table">
+                <tr>
+                  <td>Account</td>
+                  <td>{$account}</td>
+                </tr>
+                <tr>
+                  <td>Name</td>
+                  <td>{$name}</td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>{$email}</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="row">
+              <p>The administrator has received your registration request and will decide within one day whether to allow you to register based on the information you provided.</p>
+
+              <p>Learn to know more? Please send an email to <a href="#" title="This is a email">825833848@qq.com</a>.</p>
+            </div>
+         
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <!-- js -->
+</body>
+</html>

@@ -17,60 +17,66 @@
 
     <!-- 网页内容区 -->
     <div class="content">
+
         <div class="container">
 
+          {foreach $list as $vo}
+          <div class="row tr-word">
+            <table class="table">
+            
+              <tr>
+                <td>
+                    <div class="form-group">
+                        <input  type="text" class="form-control input-test"  placeholder="En" name="account" value="" autocomplete="off" words="{$vo.en}" wordid="{$vo.id}">
+                      </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>{$vo.trans}</td>
+              </tr>
+
+              <tr style="height: 30px;">
+                <td  class="answer btn-hidden">
+                  <span>
+                      <a href="{:url('outbook/en')}?en={$vo.en}" style="font-size: 20px;">{$vo.en}</a>
+                  </span>
+                  <span  style="font-size: 8px;">
+                    ( {php} 
+                      echo getClassString($vo['class'],['CEE','CET4','CET6','PEE','UNRATED']);
+                      {/php}
+                    )
+                  </span>
+                </td>
+              </tr>
+
+              
+            </table>
+          </div>
+          {/foreach}
+        </div>
+
+        <div class="container">
+          <div class="row col-xs-offset-1" style="margin-bottom: 20px;">
+            <span>Mark : </span>
+            <span id="correct_input">0</span>
+            <span>/ {$pageLenght}</span>
+          </div>
+
+          <div class="row col-xs-offset-1" style="margin-bottom: 100px;">
+              <span>
+                <a href="{:url('enbook/test')}">Try Again</a>
+              </span>
+          </div>
+
           <div class="row">
-
-              {foreach $list as $vo}
-                               
-              <div class="row" style="text-align: center">
-                <div class="container-fluid">
-                  <table class="table word-item">
-                    <tr>
-                      <td>
-                        <button class="btn btn-danger mistake btn-hidden">-1</button>
-                        <button class="btn btn-success correct btn-hidden">2</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <span class="answer btn-hidden">{$vo.en}</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input type="text" words="{$vo.en}" wordid="{$vo.id}" class="input-test  col-xs-offset-1 col-xs-10" >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="">
-                        {$vo.trans}
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-              {/foreach}
-
-              <div class="row">
-                <div style="text-align: center">
-                  <span>正确</span> 
-                  <span id="correct_input">0</span>
-                </div>
-              </div>
-              <div class="row">
-                <div style="text-align: center">
-                    <span>错误</span> 
-                    <span id="woring_input">0</span>
-                  </div>
-              </div>
-
+            
+          </div>
         </div>
     </div>
     <!-- 网页内容区 -->
 
 
-    {include file="public/footer" /}
 
     <!-- js -->
     <script src="STATIC/js/jquery.min.js"></script>

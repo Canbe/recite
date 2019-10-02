@@ -114,6 +114,14 @@ class Common extends Model
         Common::GenerateMP3($tex."_".$per,$res);
     }
 
+    public static function getTodaySentence()
+    {
+        $url = "http://api.ooopn.com/ciba/api.php";
+        $arg =[];
+        $res = Translation::call($url,$arg,"get");
+        return $res;
+    }
+
         /*
     函数作用：获取类别字符串
     参数：$class为数字；$arrayName为类别数组

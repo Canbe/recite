@@ -6,14 +6,14 @@ $(document).ready(function(){
         let val_correct = $(this).attr("words");
         
 
-        $(this).parents("tr").find(".answer").removeClass("btn-hidden");
+        $(this).parents(".word-item").find(".answer").removeClass("btn-hidden");
 
         Open(this,val_test!=""&&val_test==val_correct);
     })
 
     function Open(inp,bool)
     {
-        let tr = $(inp).parents("tr")
+        let tr = $(inp).parents(".word-item")
 
         let bt_mistake = $(tr).find(".mistake")
         let bt_correct = $(tr).find(".correct")
