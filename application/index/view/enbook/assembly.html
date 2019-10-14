@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite -Assembly</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content">
+        <div class="container">
+
+            <!-- 修改按钮 -->
+                <div class="row">
+                        {if condition="($login) and ($account['permit'] > 1)"}
+                        <button class="btn btn-info" data-toggle="modal" data-target="#panel-AssemblyUpdat">
+                          Update
+                        </button>
+      
+                        <div class="modal fade" id="panel-AssemblyUpdat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" >Assembly-Update</h4>
+                                    </div>
+                                    <form action="{:url('account/updateAssembly')}" method="post">
+                                    <div class="modal-body">
+
+                                        <input type="hidden" value="{$assembly.id}" name="id">
+      
+                                      <div class="form-group">
+                                          <label for="AssemblyUpdate-input-name">name</label>
+                                          <input type="text" class="form-control" id="AssemblyUpdate-input-name" placeholder="name" name="name" value="{$assembly.name}" autocomplete="off">
+                                        </div>
+      
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Summit</button>
+                                    </div>
+                                  </form>
+                              </div><!-- /.modal-content -->
+                          </div><!-- /.modal -->
+                      </div>
+                      {/if}
+                      
+                  </div>
+            <!-- 修改按钮 -->
+
+            <div class="row">
+                <h3>
+                    {$assembly.name}
+                </h3>
+            </div>
+
+           <div class="row" style="margin-top:10px;">
+
+                <table class="table">
+                        <tr>
+                          <th>score</th>
+                          <th>English</th>
+                          <th>audio</th>
+                          <th>Translation</th>
+                        </tr>
+          
+                        {foreach $list as $vo}
+                                         
+                        <tr wordid="{$vo.id}" class="tr-word">
+                          <td>{$vo.score}</td>
+                          <td class="td-en">
+                            <a href="{:url('outbook/en')}?en={$vo.en}" title="
+                            {php}
+                            echo getClassString($vo['class'],['CEE','CET4','CET6','PEE','UNRATED']);
+                            {/php}
+                            ">{$vo.en}</a>
+                            
+                          </td>
+                          <td class="td-audio">
+                            <img src="STATIC/img/audio.png" alt="" style="width: 10px;height:10px;">
+                            <audio src="STATIC/mp3/{$vo.en}_103.mp3"></audio>
+                          </td>
+                          <td class="td-trans" sw="1">
+                            {$vo.trans}
+                          </td>
+                        </tr>
+          
+                        {/foreach}
+          
+                      </table>
+
+           </div>
+
+
+
+
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <!-- js -->
+</body>
+</html>

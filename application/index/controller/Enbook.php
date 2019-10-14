@@ -5,6 +5,8 @@ use think\Session;
 use app\index\model\Words;
 use app\index\model\User;
 use app\index\controller\LoginBase;
+use app\index\model\Assembly;
+use app\index\model\Collect;
 use app\index\model\Common;
 
 class Enbook extends LoginBase
@@ -145,10 +147,74 @@ class Enbook extends LoginBase
 
     //测试模式
     public function test(){
+        $collect = input("collect");
         $user = User::getLoginUser()[0];
         $pageLenght = 40;
-        $list = Words::SelectWordList($user["id"],2,0,$pageLenght,Common::getClassSql($user['level']));
 
+        //测试特定的收集包
+        if($collect)
+        {
+            return $this->CollectTest($user["id"],$collect,$pageLenght);
+        }
+        return $this->NormalTest($user,$pageLenght);
+        
+    }
+
+    
+
+    //考试模式
+    public function exam()
+    {
+        $list = Words::randomSelect(40);
+
+        $this->assign("list",$list);
+        return view("exam");
+    }
+
+    public function assembly()
+    {
+
+        $id = input("id");
+        $user = User::getLoginUser()[0];
+
+        if(!$id)
+        {
+            $this->redirect("account/assembly");
+        }
+
+        
+
+
+        $assembly = Collect::GetCollectById($id);
+
+        if(!$assembly)
+        {
+            $this->redirect("account/assembly");
+        }
+
+        $list = Collect::GetWordListFromCollected($id,$user["id"],0,100);
+        
+        $this->assign("assembly",$assembly[0]);
+        $this->assign("list",$list);
+
+        return view("enbook/assembly");
+    }
+
+    private function CollectTest($userid,$listid,$pageLenght)
+    {
+        $list = Collect::GetWordListFromCollected($listid,$userid,0,$pageLenght);
+
+        return $this->GetTestView($pageLenght,$list);
+    }
+
+    private function NormalTest($user,$pageLenght)
+    {
+        $list = Words::SelectWordList($user["id"],2,0,$pageLenght,Common::getClassSql($user['level']));
+        return $this->GetTestView($pageLenght,$list);
+    }
+
+    private function GetTestView($pageLenght,$list)
+    {
         shuffle($list);
         $this->assign("pageLenght","$pageLenght");
         $this->assign("list",$list);
@@ -159,14 +225,7 @@ class Enbook extends LoginBase
         return view("enbook/test");
     }
 
-    //考试模式
-    public function exam()
-    {
-        $list = Words::randomSelect(40);
-
-        $this->assign("list",$list);
-        return view("exam");
-    }
+    
 
     
 

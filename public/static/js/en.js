@@ -71,12 +71,39 @@ $(document).ready(function(){
     //     $(tran).text($(tran).attr('trans'))
     // });
 
-    $(".tr-word .td-audio").click(function(){
+    // $(".tr-word .td-audio").click(function(){
         
-        let au = $(this).find("audio")[0];
+    //     let au = $(this).find("audio")[0];
 
-        au.play();
+    //     au.play();
 
+    // });
+
+    $(".collected").click(function(){
+        let wordid = $(this).attr("wordid");
+
+        let listid = $(this).attr("listid");
+
+        addColected(wordid,listid);
+
+        $("#panel-AddToCollect").modal('hide');
     });
+
+    function addColected(wordid,listid)
+    {
+        $.ajax({
+            url:"/recite/public/index.php/index/account/addColected",
+            type:"POST",
+            data:{wordid:wordid,listid:listid},
+            dataType:"json",
+            error:function(e){
+                console.log("error");
+                
+            },
+            success:function(data){
+                console.log(data);
+            }
+        })
+    }
  
 });

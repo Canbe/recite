@@ -3,6 +3,7 @@ namespace app\index\controller;
 use app\index\model\Words;
 use app\index\model\User;
 use app\index\controller\UnLoginBase;
+use app\index\model\Collect;
 use app\index\model\Translation;
 use app\index\model\Common;
 
@@ -59,6 +60,8 @@ class Outbook extends UnLoginBase
         if($login)
         {
             $vo = Words::SelectWordWithUser($en,$account["id"]);
+
+            $this->assign("collects",Collect::GetCollectList());
         }
         else
         {
@@ -119,6 +122,7 @@ class Outbook extends UnLoginBase
                     }
                 }             
             }
+
             $this->assign("find",1);
             $this->assign("vo",$vo[0]);
             $this->assign("links",$link_out);

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word-Recite -Assembly</title>
+    <link rel="stylesheet" href="STATIC/css/bootstrap.min.css">
+    <link rel="stylesheet" href="STATIC/css/nav.css">
+    <link rel="stylesheet" href="STATIC/css/enbook.css">
+
+
+</head>
+<body>
+
+  {include file="public/nav" /}
+
+    <!-- 网页内容区 -->
+    <div class="content">
+        <div class="container">
+
+            <!-- 新增按钮 -->
+                <div class="row">
+                        {if condition="($login) and ($account['permit'] > 1)"}
+                        <button class="btn" data-toggle="modal" data-target="#panel-AssemblyAddition">
+                          NEW
+                        </button>
+      
+                        <div class="modal fade" id="panel-AssemblyAddition" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" >Assembly Addition</h4>
+                                    </div>
+                                    <form action="{:url('account/addAssembly')}" method="post">
+                                    <div class="modal-body">
+      
+                                      <div class="form-group">
+                                          <label for="AssemblyAddition-input-name">name</label>
+                                          <input type="text" class="form-control" id="AssemblyAddition-input-name" placeholder="name" name="name" value="" autocomplete="off">
+                                        </div>
+      
+      
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Summit</button>
+                                    </div>
+                                  </form>
+                              </div><!-- /.modal-content -->
+                          </div><!-- /.modal -->
+                      </div>
+                      {/if}
+                      
+                  </div>
+            <!-- 新增按钮 -->
+
+           <div class="row col-md-7" style="margin-top:10px;">
+
+                <table class="table">
+                    <tr>
+                        
+                        <th>name</th>  
+                        <th>total</th>
+                        <th>option</th>             
+                    </tr>
+
+                    {foreach $list as $vo}
+                    <tr>            
+                        <td>
+                            <a href="{:url('enbook/assembly')}?id={$vo.id}">{$vo.name}</a>
+                        </td>
+                        <td>{$vo.total}</td>
+                        <td>
+                            <a href="{:url('enbook/test')}?collect={$vo.id}">
+                                <button class="btn btn-default">
+                                    Test
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    {/foreach}
+                </table>
+
+           </div>
+
+
+
+
+        </div>
+    </div>
+    <!-- 网页内容区 -->
+
+    <!-- js -->
+    <script src="STATIC/js/jquery.min.js"></script>
+    <script src="STATIC/js/bootstrap.min.js"></script>
+    <script src="STATIC/js/nav.js"></script>
+    <!-- js -->
+</body>
+</html>

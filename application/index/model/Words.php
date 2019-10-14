@@ -117,9 +117,10 @@ class Words extends Model
         return Db::query($str,[$en,$trans,$sentence,$link,$class,$id]);
     }
 
+    //更新单词表
     public static function UpdateWordAboutTime($id,$score)
     {
-        $str = "update words set score = if(curdate()=lastdate,score+?,1),lastdate=curdate() where id=?";
+        $str = "update words set score = if(curdate()=lastdate,score+?,score div 2 + 1),lastdate=curdate() where id=?";
 
         return Db::query($str,[$score,$id]);
     }
@@ -140,5 +141,40 @@ class Words extends Model
         $str = "insert into record values (DEFAULT,?,?,?,now()) ON DUPLICATE KEY update score = score+? ,lasttime=if(?>0,now(),lasttime) ";
 
         return Db::query($str,[$wordid,$userid,$score,$score,$score]);
+    }
+
+    public static function SearchLinkWord($link)
+    {
+        $linkList = explode(';',$link);
+        $link_out = [];
+        $index = 0;
+        foreach($linkList as $key => $linkword)
+        {
+            if($linkword == "")
+            {
+                continue;
+            }
+
+            if(substr($linkword,0,1)=='#')
+            {
+
+                $res = Words::likeSelect(substr($linkword,1),10);
+
+
+                foreach($res as $likeRes)
+                {
+                    $link_out[$index++] = $likeRes;         
+                }
+            }
+            else
+            {
+                $word = Words::SelectWord($linkword);
+                if($word)
+                {
+                    $link_out[$index++] = $word[0];
+                }
+            }             
+        }
+        return $link_out;
     }
 }

@@ -3,6 +3,8 @@ namespace app\index\controller;
 use app\index\model\Words;
 use app\index\model\User;
 use app\index\controller\LoginBase;
+use app\index\model\Assembly;
+use app\index\model\Collect;
 use app\index\model\Common;
 
 class Account extends LoginBase{
@@ -87,5 +89,67 @@ class Account extends LoginBase{
         Words::MemorizeWords($user["id"],$wordid,$score);
 
         return json(["status"=>"200"]);
+    }
+
+    public function execise()
+    {
+        
+    }
+
+    //单词集合页面
+    public function assembly()
+    {
+        $res = Collect::GetCollectList();
+
+        $this->assign("list",$res);
+
+        return view("account/assembly");
+    }
+
+    public function addassembly()
+    {
+
+        $name = input("name");
+        $user = User::getLoginUser()[0];
+
+        if(!$name||$name=="")
+        {
+            $this->error("参数错误","account/assembly",null,1);
+        }
+
+        Collect::Insert($name,$user["id"]);
+
+        $this->redirect("account/assembly");
+    }
+
+    public function updateAssembly()
+    {
+        $name = input("name");
+        $id = input("id");
+        $user = User::getLoginUser()[0];
+
+        if(!$id)
+        {
+            $this->error("参数错误","account/assembly",null,1);
+        }
+
+        Collect::UpdateCollect($id,$name);
+
+        $this->redirect("enbook/assembly",["id"=>$id]);
+    }
+
+    public function addColected()
+    {
+        $listid = input("listid");
+        $wordid = input("wordid");
+
+        if(!$listid||!$wordid)
+        {
+            return json(["status"=>400]);
+        }
+
+        Collect::InsertCollected($listid,$wordid);
+
+        return json(["status"=>200]);
     }
 }

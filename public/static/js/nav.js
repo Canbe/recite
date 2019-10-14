@@ -1,6 +1,14 @@
 $(document).ready(function(){
 
-    
+    $(".tr-word .td-audio").click(function(){
+        
+        let au = $(this).find("audio")[0];
+
+        au.play();
+
+    });
+
+
     $("#live-search").hide();
 
 
