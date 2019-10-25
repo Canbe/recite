@@ -8,6 +8,7 @@ use app\index\controller\LoginBase;
 use app\index\model\Assembly;
 use app\index\model\Collect;
 use app\index\model\Common;
+use app\index\model\Phrase;
 
 class Enbook extends LoginBase
 {
@@ -129,6 +130,18 @@ class Enbook extends LoginBase
         $this->redirect("outbook/en",["en"=>$en]);
     }
 
+    public function addphrase()
+    {
+        $en = input("en");
+        $trans = input("trans");
+
+        if($en&&$en!="")
+        {
+            Phrase::Insert($en,$trans);
+        }
+        $this->redirect("outbook/phrase");
+    }
+
     //检测单词是否存在
     public function isExist()
     {
@@ -148,8 +161,19 @@ class Enbook extends LoginBase
     //测试模式
     public function test(){
         $collect = input("collect");
+        $size = input("size");
         $user = User::getLoginUser()[0];
         $pageLenght = 40;
+        
+        if(!$size)
+        {
+            $pageLenght = 40;
+        }
+        else
+        {
+            $pageLenght = $size;
+        }
+        
 
         //测试特定的收集包
         if($collect)

@@ -17,7 +17,8 @@ define("Translation_URL","http://api.fanyi.baidu.com/api/trans/vip/translate");
 define("Translation_APP_ID","20190510000296039");
 //替换为您的密钥
 define("Translation_SEC_KEY","kaX4Rz5ovyhmTZ2zJrEW");
-define("Compound_ACCESS_TOKEN","24.dff771b27e64ba0d163b71cd16acf32a.2592000.1571394778.282335-17274101");
+//2019-10-25
+define("Compound_ACCESS_TOKEN","24.9587f7c3db55db84a511346a7e6c3aa4.2592000.1574559723.282335-17274101");
 
 function getClassSql($class)
 {

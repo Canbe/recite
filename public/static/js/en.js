@@ -56,29 +56,6 @@ $(document).ready(function(){
         location.reload();
     });
 
-    //鼠标悬浮单词展示句子，大量投诉该功能造成页面鬼畜
-    // $(".tr-word>.td-en a").hover(function(){
-        
-    //     let tran = $(this).parents("tr").find(".td-trans");
-
-    //     console.log(tran);
-        
-
-    //     $(tran).text($(tran).attr('sentence'))
-
-    // },function(){
-    //     let tran = $(this).parents("tr").find(".td-trans");
-    //     $(tran).text($(tran).attr('trans'))
-    // });
-
-    // $(".tr-word .td-audio").click(function(){
-        
-    //     let au = $(this).find("audio")[0];
-
-    //     au.play();
-
-    // });
-
     $(".collected").click(function(){
         let wordid = $(this).attr("wordid");
 
