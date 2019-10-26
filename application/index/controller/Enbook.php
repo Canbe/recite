@@ -13,9 +13,10 @@ use app\index\model\Phrase;
 class Enbook extends LoginBase
 {
 
+    //访问列表页面
     public function list(){
 
-        $page = input("page");
+        $page = input("page",1);
         $sort = input("sort");
         $user = User::getLoginUser()[0];
 
@@ -28,15 +29,9 @@ class Enbook extends LoginBase
         $totalpage = ceil($total/15);
         $sort = Session::get("SORT");
 
-        if(!$sort)
-        {
-            $sort = 2;
-        }
-
         //页面单词数
-        $pageWord = 15;
-
-        if(!$page||$page<1)
+        $pageLength = 15;
+        if($page<1)
         {
             $page = 1;
         }
@@ -44,18 +39,28 @@ class Enbook extends LoginBase
         {
             $page = $totalpage;
         }
+        //起始单词
+        $startWord = ($page-1)*15;
+        //有音频
+        $this->assign("audio",true);
+        return $this->GetScoreWordsList($user,$sort,$startWord,$pageLength,$page,$totalpage);  
+    }
 
-        $lastWord = ($page-1)*15;
+    //获得用户得分单词列表
+    private function GetScoreWordsList($user,$sort,$startWord,$pageLength,$page,$totalpage)
+    {
         $level = Common::getClassSql($user['level']);
+        $list = Words::SelectWordList($user["id"],$sort,$startWord,$pageLength,$level);      
+        $this->AssignListParameter($list,$page,$totalpage,$sort);
+        return view('list');
+    }
 
-        $list = Words::SelectWordList($user["id"],$sort,$lastWord,$pageWord,$level);
-
+    private function AssignListParameter($list,$page,$totalpage,$sort)
+    {
         $this->assign("list",$list);
         $this->assign("page",$page);
         $this->assign("totalpage",$totalpage);
         $this->assign("sort",$sort);
-
-        return view('list');
     }
 
     //修改玩家对某单词的分数
@@ -217,7 +222,7 @@ class Enbook extends LoginBase
         }
 
         $list = Collect::GetWordListFromCollected($id,$user["id"],0,100);
-        
+        $this->assign("id",$id);
         $this->assign("assembly",$assembly[0]);
         $this->assign("list",$list);
 

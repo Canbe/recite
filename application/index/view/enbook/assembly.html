@@ -21,6 +21,11 @@
 
             <!-- 修改按钮 -->
                 <div class="row">
+                        <a href="{:url('enbook/test')}?collect={$id}">
+                            <button class="btn btn-default">
+                                Test
+                            </button>
+                        </a>
                         {if condition="($login) and ($account['permit'] > 1)"}
                         <button class="btn btn-info" data-toggle="modal" data-target="#panel-AssemblyUpdat">
                           Update
