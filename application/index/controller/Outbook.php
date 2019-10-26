@@ -255,7 +255,12 @@ class Outbook extends UnLoginBase
 
     public function fortest()
     {
-        // print_r(Words::MemorizeWords(1,2553,-1));
+        $res = Phrase::GetAllPhraseList();
+
+        foreach($res as $vo)
+        {
+            Words::InsertWord($vo['en'],$vo["trans"],'',0,1);
+        }
     }
     
 }

@@ -134,6 +134,7 @@ class Common extends Model
         if ($class == NULL || $class == "") {
         return "UNRATED";
         }
+
         for ($j=0; $j<count($arrayName);$j++) { 
         if($class%10 == 1)
         { 

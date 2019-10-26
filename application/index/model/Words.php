@@ -36,34 +36,35 @@ class Words extends Model
         return Db::query($str,[$wordid,$userid,$score,$score]);
     }
 
-    public static function getSelectWordListTotal($userid,$order,$level)
+    public static function getSelectWordListTotal($userid,$order,$level,$tab)
     {
         $order = Common::getOrder($order);
 
         $level = getClassSql($level);
+        $str = "select count(*) as total from words left join record on words.id = record.wordid and userid = ? where ".$level." and tab = ? ";
 
-        $str = "select count(*) as total from words left join record on words.id = record.wordid and userid = ? where ".$level;
-
-        $res = Db::query($str,[$userid]);
+        $res = Db::query($str,[$userid,$tab]);
 
         return $res;
     }
 
-    public static function SelectWordList($userid,$order,$start,$lenght,$level)
+    public static function SelectWordList($userid,$order,$start,$lenght,$level,$tab)
     {
         $order = Common::getOrder($order);
 
         $str = "select 
         words.id as id,
         words.class as class,
-        en,trans,
+        en,
+        trans,
         sentence,
         link,
         ifNULL(record.score,0) as score,
+        words.tab,
         record.lasttime as relast 
-        from words left join record on words.id = record.wordid and userid = ? where ".$level." ORDER BY ".$order." limit ?,?";
+        from words left join record on words.id = record.wordid and userid = ? where ".$level." and tab = ? ORDER BY ".$order." limit ?,?";
 
-        $res = Db::query($str,[$userid,$start,$lenght]);
+        $res = Db::query($str,[$userid,$tab,$start,$lenght]);
 
         return $res;
     }
@@ -77,6 +78,8 @@ class Words extends Model
     {
         $str = "select 
         count(*) as total,
+        sum(if(tab=0,1,0)) as TotalWords,
+        sum(if(tab=1,1,0)) as TotalPhrase,
         sum(IF(class%10=1,1,0)) as CEE,
         sum(if(IF(class%10=1,1,0) and record.score > 1,1,0)) as already_CEE,
         sum(IF(class div 10%10=1,1,0)) as CET4,
@@ -94,7 +97,7 @@ class Words extends Model
 
     public static function SelectWordWithUser($en,$userid)
     {
-        $str = "select words.id as id,en,trans,sentence,link,class,ifNULL(record.score,0) as score ,lasttime from words left join record on words.id = record.wordid and userid = ? where words.en  = ?";
+        $str = "select words.id as id,en,trans,sentence,link,class,ifNULL(record.score,0) as score ,lasttime,words.tab from words left join record on words.id = record.wordid and userid = ? where words.en  = ?";
 
         return Db::query($str,[$userid,$en]);
     }
@@ -106,15 +109,17 @@ class Words extends Model
         return Db::query($str,[$en]);
     }
 
-    public static function InsertWord($en,$trans,$sentence,$class)
+    //插入新单词或短语
+    public static function InsertWord($en,$trans,$sentence,$class,$tab)
     {
-        $res = Db::query("insert into words (id,en,trans,sentence,link,class,lastdate,score) values (default,?,?,?,'',?,curdate(),0)",[$en,$trans,$sentence,$class]);
+        $res = Db::query("insert into words (id,en,trans,sentence,link,class,lastdate,score,tab) values (default,?,?,?,'',?,curdate(),0,?) ON DUPLICATE KEY UPDATE lastdate = curdate()",[$en,$trans,$sentence,$class,$tab]);
     }
 
-    public static function UpdateWord($id,$en,$trans,$sentence,$link,$class)
+    //更新新单词
+    public static function UpdateWord($id,$en,$trans,$sentence,$link,$class,$tab)
     {
-        $str = "update words set en = ?, trans = ?,sentence= ?,link= ? ,class = ? where id = ?";
-        return Db::query($str,[$en,$trans,$sentence,$link,$class,$id]);
+        $str = "update words set en = ?, trans = ?,sentence= ?,link= ? ,class = ?,tab = ? where id = ?";
+        return Db::query($str,[$en,$trans,$sentence,$link,$class,$tab,$id]);
     }
 
     //更新单词表

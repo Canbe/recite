@@ -35,7 +35,11 @@ class Collect extends Model
 
    public static function GetCollectById($id)
    {
-       $str = "select * from collect where id = ?";
+       $str = "select collect.id as id,name as name,userid as userid,count(*) as total
+       from
+       collect LEFT JOIN collected  on collect.id = collected.listid 
+       where collect.id = ? 
+       GROUP BY collect.id ";
        return Db::query($str,[$id]);
    }
 
@@ -56,14 +60,22 @@ class Collect extends Model
    }
 
    //从收集表中查询单词
-   public static function GetWordListFromCollected($listid,$userid,$startpage,$pageLength)
+   public static function GetWordListFromCollected($listid,$userid,$sort,$startpage,$pageLength)
    {
+       if($sort==1)
+       {
+           $sort = 'id';
+       }
+       else
+       {
+           $sort = 'score';
+       }
        $str = "select collected.wordid as id,en,trans,class,ifnull(record.score,0) as score,ifnull(record.userid,0) as userid
        from 
        collected left JOIN words on words.id = collected.wordid 
        left join record on record.wordid = collected.wordid and userid = ?
        where collected.listid =?
-       ORDER BY score limit ?,?;";
+       ORDER BY ".$sort." limit ?,?;";
 
        return Db::query($str,[$userid,$listid,$startpage,$pageLength]);
    }

@@ -25,7 +25,7 @@ function getClassSql($class)
     $string = "";
     if($class==NULL || $class == "" || $class == 0)
     {
-        return "false";
+        return "true";
     }
 
     for($i = 1;$i<=10000;$i=$i*10)
@@ -51,6 +51,7 @@ function getClassSql($class)
         if ($class == NULL || $class == "") {
         return "UNRATED";
         }
+        if($class==0) return 'Phrase';
         for ($j=0; $j<count($arrayName);$j++) { 
         if($class%10 == 1)
         { 

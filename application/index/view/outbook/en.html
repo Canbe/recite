@@ -38,6 +38,13 @@
                               <div class="modal-body">
 
                                 <div class="form-group">
+                                      <select name="tab" id="WordAddition-select-tab">
+                                        <option value="0">Word</option>
+                                        <option value="1">Phrase</option>
+                                      </select>
+                                  </div>
+
+                                <div class="form-group">
                                     <label for="addition-input-en">en</label>
                                     <input type="text" class="form-control" id="WordAddition-input-en" placeholder="en" name="en" value="" autocomplete="off">
                                   </div>
@@ -132,11 +139,11 @@
                     {$vo.trans}
                   </td>
                 </tr>
-
+                {if condition="$vo['tab']==0"}
                 <tr>
                   <td>{$vo.sentence}</td>
                 </tr>
-
+                {/if}
                 
                 {if condition="($login)"}
                 <tr>
@@ -191,9 +198,17 @@
                         <div class="modal-body">
                           <input type="hidden" name="id" value="{$vo.id}">
                           <div class="form-group">
+                              <select name="tab" id="modifation-select-tab">
+                                <option value="0">Word</option>
+                                <option value="1" {$vo.tab==1?'selected':''}>Phrase</option>
+                              </select>
+                          </div>
+                          <div class="form-group">
                               <label for="addition-input-en">en</label>
                               <input type="text" class="form-control"  id="modifation-input-en" placeholder="en" name="en" value="{$vo.en}" autocomplete="off">
                             </div>
+
+                            
 
                             <div class="checkbox-inline div-class">
                               <label>
