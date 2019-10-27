@@ -192,53 +192,6 @@ class Outbook extends UnLoginBase
         return json($res[0]);
     }
 
-    public function phrase()
-    {
-        $page = input("page");
-        $sort = input("sort");
-
-        if($sort)
-        {
-            Session::set("SORT",$sort);
-        }
-        $sort = Session::get("SORT");
-        $total = Phrase::getTotal();
-        $totalpage = ceil($total/15);
-        
-        if(!$sort)
-        {
-            $sort = 3;
-        }
-        $pageLength = 15;
-        if(!$page||$page<1)
-        {
-            $page = 1;
-            
-        }
-        if($page&&$page>$totalpage)
-        {
-            $page = $totalpage;
-        }
-        $startPage = ($page-1)*$pageLength;
-        
-
-        if(User::HasLogin())
-        {
-            $account = User::getLoginUser()[0];
-            $this->assign("account",$account);
-            $this->assign("login",true);      
-        }
-
-        
-
-        $res = Phrase::GetPhraseList($startPage,$pageLength,$sort);
-
-        $this->assign("totalpage",$totalpage);
-        $this->assign("page",$page);
-        $this->assign("list",$res);
-        return view("outbook/phrase");
-    }
-
     private function getAccessToken()
     {
 
@@ -253,14 +206,8 @@ class Outbook extends UnLoginBase
         print_r(json_decode($res,true));
     }
 
-    public function fortest()
+    private function fortest()
     {
-        $res = Phrase::GetAllPhraseList();
-
-        foreach($res as $vo)
-        {
-            Words::InsertWord($vo['en'],$vo["trans"],'',0,1);
-        }
     }
     
 }

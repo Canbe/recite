@@ -126,6 +126,7 @@ class Account extends LoginBase{
     {
         $name = input("name");
         $id = input("id");
+        $page = input("page",1);
         $user = User::getLoginUser()[0];
 
         if(!$id)
@@ -133,9 +134,14 @@ class Account extends LoginBase{
             $this->error("参数错误","account/assembly",null,1);
         }
 
+        if($user["permit"]<1)
+        {
+            $this->redirect("enbook/list",["id"=>$id,'page'=>$page]);
+        }
+
         Collect::UpdateCollect($id,$name);
 
-        $this->redirect("enbook/assembly",["id"=>$id]);
+        $this->redirect("enbook/list",["id"=>$id,'page'=>$page]);
     }
 
     public function addColected()

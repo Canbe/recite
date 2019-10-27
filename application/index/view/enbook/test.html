@@ -39,6 +39,7 @@
                 </td>
                 <td>
                     <span class="answer btn-hidden"><a href="{:url('outbook/en')}?en={$vo.en}">{$vo.en}</a></span>
+                    <a class="btn btn-default hint" title="Initial Hint">{php} echo ucwords(substr($vo['en'],0,1));  {/php}</a>
                 </td>
                 <td>
                     <input type="text" words="{$vo.en}" wordid="{$vo.id}" class="input-test">
@@ -76,9 +77,6 @@
         </div>
     </div>
     <!-- 网页内容区 -->
-
-
-    {include file="public/footer" /}
 
     <!-- js -->
     <script src="STATIC/js/jquery.min.js"></script>

@@ -7,6 +7,7 @@ $(document).ready(function(){
         
 
         $(this).parents(".tr-word").find(".answer").removeClass("btn-hidden");
+        $(this).parents(".tr-word").find(".hint").addClass("btn-hidden");
 
         Open(this,val_test!=""&&val_test==val_correct);
         NextInput(this);

@@ -16,7 +16,7 @@ class Words extends Model
     //模糊搜索列表
     public static function likeSelect($en,$num){
         $en = '%%'.$en.'%%';
-        $str = "select * from words where en like ? or trans like ? order by en limit ?";
+        $str = "select * from words where en like ? or trans like ? order by tab,en  limit ?";
         return  Db::query($str,[$en,$en,$num]);
     }
 
